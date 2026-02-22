@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  credit-risk-model:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: credit-risk-modeling
+    volumes:
+      # Mount project directory
+      - .:/app
+      # Mount data directory (avoid copying large datasets into image)
+      - ./data:/app/data
+      # Mount models directory
+      - ./models:/app/models
+      # Mount reports directory
+      - ./reports:/app/reports
+    ports:
+      # Jupyter Lab
+      - "8888:8888"
+    environment:
+      - PYTHONPATH=/app
+      - KAGGLE_USERNAME=${KAGGLE_USERNAME}
+      - KAGGLE_KEY=${KAGGLE_KEY}
+    command: bash
+    stdin_open: true
+    tty: true
+
+  # Optional: Add Jupyter service separately
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: credit-risk-jupyter
+    volumes:
+      - .:/app
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./reports:/app/reports
+    ports:
+      - "8889:8888"
+    environment:
+      - PYTHONPATH=/app
+    command: >
+      jupyter lab 
+      --ip=0.0.0.0 
+      --port=8888 
+      --no-browser 
+      --allow-root
+      --NotebookApp.token=''
+      --NotebookApp.password=''
+    profiles:
+      - jupyter
+
+networks:
+  default:
+    name: credit-risk-network

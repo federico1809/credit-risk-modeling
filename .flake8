@@ -1,0 +1,45 @@
+[flake8]
+# Flake8 configuration
+
+max-line-length = 100
+exclude = 
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    .eggs,
+    *.egg,
+    build,
+    dist,
+    .ipynb_checkpoints
+
+# Ignore specific errors
+ignore = 
+    E203,  # Whitespace before ':'
+    E501,  # Line too long (handled by black)
+    W503,  # Line break before binary operator
+    E402,  # Module level import not at top of file
+    F401,  # Module imported but unused (in __init__.py)
+
+per-file-ignores =
+    __init__.py:F401
+
+max-complexity = 10
+
+[isort]
+# isort configuration
+profile = black
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = True
+force_grid_wrap = 0
+use_parentheses = True
+ensure_newline_before_comments = True
+
+[mypy]
+# MyPy configuration
+python_version = 3.9
+warn_return_any = True
+warn_unused_configs = True
+disallow_untyped_defs = False
+ignore_missing_imports = True

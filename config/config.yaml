@@ -1,0 +1,198 @@
+# Credit Risk Modeling - Configuration File
+
+# Project metadata
+project:
+  name: "credit-risk-modeling"
+  version: "1.0.0"
+  author: "Federico Ceballos Torres"
+  description: "End-to-end ML system for loan default prediction"
+
+# Data paths
+data:
+  raw_path: "data/raw/lending_club.csv"
+  processed_path: "data/processed/"
+  train_file: "train_data.csv"
+  test_file: "test_data.csv"
+  features_file: "feature_names.txt"
+
+# Data preprocessing
+preprocessing:
+  # Date column for temporal split
+  date_column: "issue_d"
+  # Train/test split date (80/20 split approximately)
+  train_test_split_date: "2015-01-01"
+  
+  # Target variable definition
+  target_column: "loan_status"
+  default_statuses: 
+    - "Charged Off"
+    - "Default"
+    - "Does not meet the credit policy. Status:Charged Off"
+  
+  non_default_statuses:
+    - "Fully Paid"
+  
+  # Statuses to exclude (uncertain outcomes)
+  exclude_statuses:
+    - "Current"
+    - "Late (31-120 days)"
+    - "Late (16-30 days)"
+    - "In Grace Period"
+    - "Issued"
+
+  # Features to drop (data leakage)
+  leakage_features:
+    - "funded_amnt"
+    - "funded_amnt_inv"
+    - "total_pymnt"
+    - "total_pymnt_inv"
+    - "total_rec_prncp"
+    - "total_rec_int"
+    - "total_rec_late_fee"
+    - "recoveries"
+    - "collection_recovery_fee"
+    - "last_pymnt_d"
+    - "last_pymnt_amnt"
+    - "next_pymnt_d"
+    - "last_credit_pull_d"
+    - "out_prncp"
+    - "out_prncp_inv"
+
+  # Missing value handling strategy
+  missing_strategy:
+    emp_length: 0  # Assume unemployed (conservative)
+    mths_since_last_delinq: 999  # Never delinquent
+    mths_since_last_record: 999  # No public records
+    revol_util: "median"
+    dti: "group_median"  # Median by grade
+    annual_inc: "median"
+
+# Feature engineering
+feature_engineering:
+  # Whether to create interaction features
+  create_interactions: true
+  
+  # Whether to create temporal features
+  create_temporal: true
+  
+  # Categorical encoding method
+  categorical_encoding: "onehot"  # Options: onehot, label, target
+  
+  # Numerical binning strategy
+  binning_strategy: "quantile"  # Options: quantile, uniform, custom
+  
+  # Feature selection
+  feature_selection:
+    method: "mutual_info"  # Options: mutual_info, chi2, correlation
+    k_best: 50
+
+# Model training
+model:
+  # Random seed for reproducibility
+  random_state: 42
+  
+  # Test set size
+  test_size: 0.2
+  
+  # Cross-validation folds
+  cv_folds: 5
+  
+  # Class imbalance handling
+  class_balance:
+    method: "class_weight"  # Options: class_weight, smote, undersampling
+    sampling_strategy: 0.5  # For SMOTE: minority class will be 50% of majority
+  
+  # Models to train
+  models:
+    logistic_regression:
+      enabled: true
+      params:
+        max_iter: 1000
+        solver: "lbfgs"
+        class_weight: "balanced"
+    
+    random_forest:
+      enabled: true
+      params:
+        n_estimators: 100
+        max_depth: 10
+        min_samples_split: 100
+        min_samples_leaf: 50
+        class_weight: "balanced"
+        n_jobs: -1
+      
+      # Hyperparameter tuning
+      tune_hyperparams: true
+      param_grid:
+        max_depth: [5, 7, 10]
+        min_samples_split: [50, 100, 200]
+        min_samples_leaf: [20, 50, 100]
+    
+    xgboost:
+      enabled: true
+      params:
+        n_estimators: 100
+        max_depth: 5
+        learning_rate: 0.1
+        subsample: 0.8
+        colsample_bytree: 0.8
+        min_child_weight: 10
+        scale_pos_weight: 6  # Approximate ratio of negatives to positives
+        objective: "binary:logistic"
+        eval_metric: "auc"
+        random_state: 42
+      
+      # Hyperparameter tuning
+      tune_hyperparams: true
+      param_grid:
+        max_depth: [3, 5, 7]
+        learning_rate: [0.01, 0.05, 0.1]
+        n_estimators: [100, 200]
+        min_child_weight: [5, 10, 20]
+
+# Model evaluation
+evaluation:
+  # Primary metric for model selection
+  primary_metric: "roc_auc"  # Options: roc_auc, pr_auc, f1, recall
+  
+  # Metrics to calculate
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1"
+    - "roc_auc"
+    - "pr_auc"
+    - "brier_score"
+  
+  # Business metrics
+  business_metrics:
+    # Cost of false positive (rejecting good loan)
+    cost_fp: 500
+    
+    # Cost of false negative (approving bad loan)
+    cost_fn: 10000
+    
+    # Loss Given Default (LGD) for ECL calculation
+    lgd: 0.6
+  
+  # Interpretability
+  interpretability:
+    shap_enabled: true
+    lime_enabled: true
+    feature_importance: true
+    pdp_enabled: true
+
+# Logging
+logging:
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR
+  log_dir: "logs/"
+  log_file: "training.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Output paths
+output:
+  models_dir: "models/"
+  reports_dir: "reports/"
+  figures_dir: "reports/figures/"
+  metrics_dir: "reports/metrics/"
