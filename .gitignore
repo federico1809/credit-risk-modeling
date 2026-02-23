@@ -134,3 +134,9 @@ Desktop.ini
 !models/.gitkeep
 !reports/figures/.gitkeep
 !reports/metrics/.gitkeep
+
+# Ignorar archivos comprimidos y datos grandes
+*.gz
+*.csv
+data/raw/
+data/processed/
