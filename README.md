@@ -272,10 +272,12 @@ pytest tests/ --cov=src --cov-report=html
 
 ## 📚 Documentation
 
-- [Project Summary](PROJECT_SUMMARY.md) - Complete project overview, methodology, and business context
-- [Architecture](PROJECT_ARCHITECTURE.md) - Technical design and implementation phases
-- [Best Practices](BEST_PRACTICES.md) - Domain knowledge and coding guidelines
-- [Data Documentation](data/README.md) - Dataset details and source
+- **[Project Summary](PROJECT_SUMMARY.md):** Complete project overview, methodology, and business context
+- **[Project Architecture](PROJECT_ARCHITECTURE.md):** Detailed system design and development phases
+- **[Best Practices](BEST_PRACTICES.md):** Technical guidelines and domain-specific considerations
+- **[Contributing Guide](CONTRIBUTING.md):** Development workflow, notebooks vs scripts, code style
+- **[Data Documentation](data/README.md):** Dataset details, sources, and feature descriptions
+
 ---
 
 ## 🛠️ Tech Stack
