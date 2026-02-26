@@ -77,9 +77,16 @@ venv.bak/
 data/raw/*.csv
 data/raw/*.zip
 data/raw/*.parquet
+data/raw/*.gz
 data/processed/*.csv
 data/processed/*.parquet
 data/processed/*.pkl
+*.csv
+*.gz
+
+# Keep data directories
+!data/raw/.gitkeep
+!data/processed/.gitkeep
 
 # Model artifacts - Track only final versions manually
 models/*.pkl
@@ -89,16 +96,24 @@ models/*.onnx
 *.pkl
 *.joblib
 
+# Keep models directory
+!models/.gitkeep
+
 # Logs
 logs/
 *.log
 
-# Reports - Don't track generated reports, only code that generates them
+# Reports - Don't track generated reports, except README images
+!reports/figures/eda_overview.png
 reports/figures/*.png
 reports/figures/*.jpg
 reports/figures/*.svg
 reports/metrics/*.json
 reports/metrics/*.txt
+
+# Keep reports directories
+!reports/figures/.gitkeep
+!reports/metrics/.gitkeep
 
 # Kaggle credentials (IMPORTANT: Never commit API keys!)
 kaggle.json
@@ -127,16 +142,3 @@ docker-compose.override.yml
 Thumbs.db
 ehthumbs.db
 Desktop.ini
-
-# Keep these empty directories
-!data/raw/.gitkeep
-!data/processed/.gitkeep
-!models/.gitkeep
-!reports/figures/.gitkeep
-!reports/metrics/.gitkeep
-
-# Ignorar archivos comprimidos y datos grandes
-*.gz
-*.csv
-data/raw/
-data/processed/
