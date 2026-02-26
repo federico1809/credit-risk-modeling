@@ -8,7 +8,7 @@
 
 > A production-ready machine learning system for predicting loan default probability using Lending Club data, with emphasis on feature engineering, model interpretability, and financial business metrics.
 
-![Project Overview](reports/figures/eda_overview.png)
+![Project Overview](reports/figures/eda_overview2.png)
 
 ---
 
