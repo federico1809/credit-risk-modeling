@@ -47,7 +47,7 @@ This project develops a **credit scoring system** to predict loan defaults using
 - **Architecture**: XGBoost with feature selection (100 features)
 - **Optimization**: Optuna hyperparameter tuning (20 trials)
 - **Calibration**: Isotonic Regression for probability correction
-- **Threshold**: 0.205 (optimized for business cost minimization)
+- **Threshold**: 0.228 (optimized for business cost minimization)
 
 ---
 
@@ -175,7 +175,7 @@ credit-risk-modeling/
 
 **Optimal Threshold Selection**:
 - **Baseline (0.5)**: Total cost = $27.39M
-- **Optimized (0.205)**: Total cost = **$10.50M**
+- **Optimized (0.228)**: Total cost = **$10.50M**
 - **Savings**: **$16.89M (38.3% reduction)** 💰
 
 **Expected Credit Loss (ECL)**:
