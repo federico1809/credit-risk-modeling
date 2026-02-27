@@ -21,7 +21,7 @@ This project develops a **credit scoring system** to predict loan defaults using
 - **Default Rate**: 19.64%
 - **Challenge**: Balance false positives (lost revenue) vs false negatives (credit losses)
 
-![Project Overview](reports/figures/eda_overview2.png)
+![Project Overview](reports/figures/business_cost_optimization.png)
 
 ---
 
@@ -38,10 +38,9 @@ This project develops a **credit scoring system** to predict loan defaults using
 
 ### 💰 Business Impact
 
-- **Cost Savings**: **$16.89M (38.3%)** through optimal threshold selection (0.205 vs 0.5)
-- **Risk Concentration**: Top 10% riskiest loans have **2.5x higher default rate**
-- **ECL Accuracy**: Prediction error reduced from **133% to 2.6%** (near-perfect calibration)
-- **Production-Ready**: Model with 100 optimized features, calibrated probabilities
+- **Cost Savings**: **$17.47M (39.1%)** through optimal threshold selection (0.228 vs 0.5)
+  - Standard Threshold (0.5): $44.69M total cost
+  - Optimized Threshold (0.228): $27.22M total cost
 
 ### 🎯 Best Model Configuration
 
