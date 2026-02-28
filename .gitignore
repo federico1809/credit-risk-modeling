@@ -104,9 +104,6 @@ logs/
 *.log
 
 # Reports - Don't track generated reports, except README images
-!reports/figures/eda_overview.png
-reports/figures/*.png
-reports/figures/*.jpg
 reports/figures/*.svg
 reports/metrics/*.json
 reports/metrics/*.txt

@@ -18,10 +18,8 @@ This project develops a **credit scoring system** to predict loan defaults using
 - **Portfolio Size**: ~330K loans analyzed
 - **Average Loan Amount**: $15,000
 - **Loss per Default**: $10,000 (after recovery)
-- **Default Rate**: 19.64%
+- **Default Rate**: 23.14%
 - **Challenge**: Balance false positives (lost revenue) vs false negatives (credit losses)
-
-![Project Overview](reports/figures/business_cost_optimization.png)
 
 ---
 
@@ -34,20 +32,27 @@ This project develops a **credit scoring system** to predict loan defaults using
 | **ROC-AUC** | 0.7125 | **0.7161** | +0.35% |
 | **Brier Score** | 0.2598 | **0.1590** | **+38.8%** ✨ |
 | **ECL Error** | 133.0% | **2.6%** | **+130.4pp** 🚀 |
-| **Precision@10%** | 19.6% | **50.13%** | +2.5x |
+| **Precision@10%** | 23.14% | **50.13%** | +2.2x |
 
 ### 💰 Business Impact
 
 - **Cost Savings**: **$17.47M (39.1%)** through optimal threshold selection (0.228 vs 0.5)
   - Standard Threshold (0.5): $44.69M total cost
   - Optimized Threshold (0.228): $27.22M total cost
+- **Risk Concentration**: Top 10% riskiest loans have **2.2x higher default rate** (50.13% vs 23.14% baseline)
+- **Expected Credit Loss**: $390.9M total, $5,393 average per loan
+- **ECL Accuracy**: Prediction error reduced from **133% to 2.6%** (near-perfect calibration after optimization)
+- **Production-Ready**: Model with 100 optimized features, calibrated probabilities
+
+![Business Cost Optimization](reports/figures/business_cost_optimization.png)
+*Optimal threshold (0.228) saves $17.47M compared to standard threshold (0.5)*
 
 ### 🎯 Best Model Configuration
 
 - **Architecture**: XGBoost with feature selection (100 features)
 - **Optimization**: Optuna hyperparameter tuning (20 trials)
 - **Calibration**: Isotonic Regression for probability correction
-- **Threshold**: 0.228 (optimized for business cost minimization)
+- **Threshold**: 0.205 (optimized for business cost minimization)
 
 ---
 
@@ -98,7 +103,7 @@ credit-risk-modeling/
 
 **Key Findings**:
 - **Dataset**: 2.26M loans → 331K after cleaning
-- **Default Rate**: 19.64% (class imbalance 4:1)
+- **Default Rate**: 23.14% (class imbalance 3.3:1)
 - **Temporal Split**: Train (78.1%) / Test (21.9%) based on issue date
 - **Missing Values**: Handled with domain-specific imputation strategies
 - **Feature Correlation**: Identified multicollinearity (removed via VIF analysis)
@@ -174,19 +179,19 @@ credit-risk-modeling/
 - **Cost Ratio**: 20:1 (FN is 20x more expensive)
 
 **Optimal Threshold Selection**:
-- **Baseline (0.5)**: Total cost = $27.39M
-- **Optimized (0.228)**: Total cost = **$10.50M**
-- **Savings**: **$16.89M (38.3% reduction)** 💰
+- **Baseline (0.5)**: Total cost = $44.69M
+- **Optimized (0.228)**: Total cost = **$27.22M**
+- **Savings**: **$17.47M (39.1% reduction)** 💰
 
 **Expected Credit Loss (ECL)**:
-- Total ECL: $328.9M
-- Average ECL per loan: $4,537
-- ECL as % of portfolio: ~30%
-- **ECL Error**: 133% (probabilities overestimate risk)
+- Total ECL: **$390.85M**
+- Average ECL per loan: **$5,393**
+- ECL as % of portfolio: ~36%
+- **ECL Error (Baseline)**: 133% (probabilities overestimate risk)
 
 **Precision@K**:
-- Top 10%: **50.13%** default rate (vs 19.64% baseline)
-- Top 20%: 43.87% default rate
+- Top 10%: **50.13%** default rate (vs 23.14% baseline)
+- Top 20%: **43.63%** default rate
 
 #### **4.2 Model Interpretation (SHAP)**
 
